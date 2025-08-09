@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love</title>
+    <script src="https://unpkg.com/gsap@3.9.0/dist/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #ff5e8a;
+            --secondary: #ff95b5;
+            --dark: #2c2c54;
+            --light: #f7f1e3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff5f7, #ffeef2);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 2rem auto;
+            border: 8px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+            100% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); }
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 94, 138, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 94, 138, 0.6);
+        }
+        
+        .balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .balloon {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 15s infinite ease-in;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); }
+            100% { transform: translateY(-100vh) scale(1); }
+        }
+        
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+        }
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .memory-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 450px; /* Increased height */
+            width: 350px;  /* Optional: Set a specific width */
+        }
+        
+        .memory-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-image {
+            height: 300px; /* Increased height for the image */
+            overflow: hidden;
+        }
+        
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .memory-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-date {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .love-letter {
+            background: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-top: 2rem;
+            text-align: right;
+            color: var(--primary);
+        }
+        
+        .cake-container {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .cake {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .candle {
+            position: absolute;
+            width: 10px;
+            height: 60px;
+            background: #ffc200;
+            border-radius: 5px;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        .flame {
+            position: absolute;
+            width: 15px;
+            height: 25px;
+            background: #ff9500;
+            border-radius: 50% 50% 20% 20%;
+            top: -85px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 0.5s infinite alternate;
+            box-shadow: 0 0 20px rgba(255, 190, 0, 0.8);
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 0.8; }
+        }
+        
+        .cake-layer {
+            position: absolute;
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+        }
+        
+        .layer-1 {
+            background: #f8c8dc;
+            bottom: 0;
+        }
+        
+        .layer-2 {
+            background: #ffb6c1;
+            bottom: 60px;
+        }
+        
+        .layer-3 {
+            background: #ff9bb3;
+            bottom: 120px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .frosting {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            bottom: 110px;
+            z-index: 1;
+        }
+        
+        .countdown {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .countdown-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .countdown-item {
+            text-align: center;
+        }
+        
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .countdown-label {
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            animation: heartFloat 5s linear forwards;
+            opacity: 0;
+        }
+        
+        @keyframes heartFloat {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .love-letter {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="balloons" id="balloons"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="title">Happy Birthday, My Love</h1>
+            <p class="subtitle">The day the universe smiled when you were born</p>
+            
+            <div class="hero-image">
+                <img src="D:\New folder\Snapchat-1126875039.jpg" />
+            </div>
+            
+            <a href="#memories" class="btn">Our Memories</a>
+        </div>
+    </div>
+    
+    <section id="memories">
+        <h2 class="section-title">Our Beautiful Moments</h2>
+        
+        <div class="memory-grid">
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\chat.jpg.png"/>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">First Day We Talk<br>(Our first chat)</h3>
+                    <p class="card-date">February 30, 20xx</p>
+                </div>
+            </div>
+            
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 140144.png" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Our First picture🫶</h3>
+                    <p class="card-date">February 14, 2025</p>
+                </div>
+            </div>
+            
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 145853.png" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">First pic you send it to me</h3>
+                    <p class="card-date">April 30, 2025</p>
+                </div>
+            </div>
+            
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 151019.png" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">You gave me your insta password</h3>
+                    <p class="card-date">June 8, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 153318.png"/>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Your Eyes</h3>
+                    <p class="card-date">June 12, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 153515.png"/>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The day I propose you❤️</h3>
+                    <p class="card-date">June 16, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 154433.png"/>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">My Gnduuuu Bachaa💕</h3>
+                    <p class="card-date">June 19, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\Screenshot 2025-08-09 154524.png"/>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Haaye mera Gnduuuuuuuuuu</h3>
+                    <p class="card-date">June 20, 2025</p>
+                </div>
+            </div>
+
+            <!-- Additional Memory Cards -->
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\memory9.jpg" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Our First Trip Together</h3>
+                    <p class="card-date">July 15, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\memory10.jpg" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Movie Night</h3>
+                    <p class="card-date">August 1, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\memory11.jpg" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Cooking Together</h3>
+                    <p class="card-date">August 5, 2025</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="card-image">
+                    <img src="D:\New folder\memory12.jpg" />
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Celebrating Your Birthday</h3>
+                    <p class="card-date">August 9, 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Happy Birthday! Love you always!</p>
+    </footer>
+</body>
+</html>
